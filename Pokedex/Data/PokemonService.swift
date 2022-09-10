@@ -14,7 +14,7 @@ import Moya
 final class PokemonService {
     static let shared = PokemonService()
     
-    private let PAGING_SIZE = 20
+    static let PAGING_SIZE = 20
     private var page = 0
     
     let disposeBag = DisposeBag()
@@ -24,8 +24,8 @@ final class PokemonService {
         plugins: [NetworkLogger()]
     )
     
-    func fetchPokemon() -> Single<[Pokemon]> {
-        return request(.fetchPokemon(limit: PAGING_SIZE, offset: page * PAGING_SIZE), type: PokemonEntity.self).map{ $0.results }
+    func fetchPokemon(limit : Int = PokemonService.PAGING_SIZE) -> Single<[Pokemon]> {
+        return request(.fetchPokemon(limit: limit, offset: page * PokemonService.PAGING_SIZE), type: PokemonEntity.self).map{ $0.results }
     }
     
 }

@@ -40,12 +40,18 @@ class ViewController: UIViewController {
     
     private func fetchPokemonList(){
         isLoading = true
-        PokemonService.shared.fetchPokemon().subscribe { event in
+        PokemonService.shared.fetchPokemon(limit: 60).subscribe { event in
             switch event {
             case .success(let pokemonArr):
                 DispatchQueue.main.async() {
+                    var paths = [IndexPath]()
+                    for item in 0 ..< PokemonService.PAGING_SIZE {
+                        let indexPath = IndexPath(row: item + self.pokemonList.count, section: 0)
+                        paths.append(indexPath)
+                    }
+                    
                     self.pokemonList.append(contentsOf: pokemonArr)
-                    self.poketmonListView.reloadData()
+                    self.poketmonListView.insertItems(at: paths)
                     self.isLoading = false
                 }
             case .failure(let error):
@@ -101,8 +107,7 @@ extension ViewController : UICollectionViewDelegate {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.height
-        
-        // 스크롤이 테이블 뷰 Offset의 끝에 가게 되면 다음 페이지를 호출
+
         if offsetY > (contentHeight - height) {
             if isLoading == false {
                 fetchPokemonList()
