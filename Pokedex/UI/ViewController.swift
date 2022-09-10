@@ -11,49 +11,39 @@ import SnapKit
 class ViewController: UIViewController {
     
     private let poketmonListView:  UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 200, height: 60)
+        let layout = ColumnFlowLayout(cellsPerRow: 2, minimumInteritemSpacing: 10, minimumLineSpacing: 10, sectionInset: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .green
         return collectionView
     }()
     
+    private var pokemonList : [Pokemon] = []
     
     private func setUpUI(){
         view.backgroundColor = .white
         
-        poketmonListView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
+        poketmonListView.register(PokemonCell.self, forCellWithReuseIdentifier: "MyCell")
         poketmonListView.dataSource = self
         poketmonListView.delegate = self
-    
-        let lable = UILabel()
         
         view.addSubview(poketmonListView)
-        view.addSubview(lable)
         
         poketmonListView.snp.makeConstraints{(make) -> Void in
-            make.top.equalTo(self.view).offset(30)
-            make.height.equalTo(100)
-            make.width.equalTo(300)
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
         }
         
-        lable.snp.makeConstraints{(make) -> Void in
-            make.top.equalTo(poketmonListView.snp.bottom).offset(30)
-            make.height.lessThanOrEqualTo(self.view)
-            make.width.lessThanOrEqualTo(self.view)
-        }
         
-        PokemonService.shared.fetchPokemon().subscribe{ event in
+        PokemonService.shared.fetchPokemon().subscribe { event in
             switch event {
             case .success(let pokemon):
                 DispatchQueue.main.async() {
-                    lable.text = pokemon.first?.name ?? ""
+                    self.pokemonList = pokemon
+                    self.poketmonListView.reloadData()
                 }
             case .failure(let error):
                 DispatchQueue.main.async() {
                     print(error)
                 }
-               
             }
         }
         
@@ -72,16 +62,21 @@ class ViewController: UIViewController {
 
 
 extension ViewController : UICollectionViewDataSource {
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return self.pokemonList.count
     }
     
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! PokemonCell
+        cell.layer.cornerRadius = 20.0
+        cell.layer.masksToBounds = true
         cell.backgroundColor = .red
+        cell.pokemonImg.loadFrom(URLAddress: self.pokemonList[indexPath.item].getImageUrl())
         return cell
     }
+    
 }
 
 
