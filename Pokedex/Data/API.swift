@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 enum API {
-    case fetchPokemon
+    case fetchPokemon(limit : Int, offset : Int)
 }
 
 extension API : TargetType {
@@ -38,6 +38,15 @@ extension API : TargetType {
     
     var task: Task {
         switch self {
+        case let .fetchPokemon(limit, offset):
+            let param: [String: Int] = [
+                "limit": limit,
+                "offset": offset
+            ]
+            return .requestParameters(
+                parameters: param,
+                encoding: URLEncoding.queryString
+            )
         default:
             return .requestPlain
         }

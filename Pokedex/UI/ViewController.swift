@@ -17,7 +17,10 @@ class ViewController: UIViewController {
         return collectionView
     }()
     
+    private var isLoading = false
+    
     private var pokemonList : [Pokemon] = []
+    
     
     private func setUpUI(){
         view.backgroundColor = .white
@@ -32,13 +35,18 @@ class ViewController: UIViewController {
             make.edges.equalTo(self.view.safeAreaLayoutGuide)
         }
         
-        
+        fetchPokemonList()
+    }
+    
+    private func fetchPokemonList(){
+        isLoading = true
         PokemonService.shared.fetchPokemon().subscribe { event in
             switch event {
-            case .success(let pokemon):
+            case .success(let pokemonArr):
                 DispatchQueue.main.async() {
-                    self.pokemonList = pokemon
+                    self.pokemonList.append(contentsOf: pokemonArr)
                     self.poketmonListView.reloadData()
+                    self.isLoading = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async() {
@@ -46,8 +54,6 @@ class ViewController: UIViewController {
                 }
             }
         }
-        
-        
     }
     
     
@@ -62,7 +68,7 @@ class ViewController: UIViewController {
 
 
 extension ViewController : UICollectionViewDataSource {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.pokemonList.count
     }
@@ -79,6 +85,9 @@ extension ViewController : UICollectionViewDataSource {
         return cell
     }
     
+    
+    
+
 }
 
 
@@ -86,5 +95,22 @@ extension ViewController : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("User tapped on item \(indexPath.row)")
     }
+    
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.height
+        
+        // 스크롤이 테이블 뷰 Offset의 끝에 가게 되면 다음 페이지를 호출
+        if offsetY > (contentHeight - height) {
+            if isLoading == false {
+                fetchPokemonList()
+            }
+        }
+    }
 }
+
+
+
 

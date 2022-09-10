@@ -14,6 +14,9 @@ import Moya
 final class PokemonService {
     static let shared = PokemonService()
     
+    private let PAGING_SIZE = 20
+    private var page = 0
+    
     let disposeBag = DisposeBag()
     
     let apiProvider = MoyaProvider<API>(
@@ -22,7 +25,7 @@ final class PokemonService {
     )
     
     func fetchPokemon() -> Single<[Pokemon]> {
-        return request(.fetchPokemon, type: PokemonEntity.self).map{ $0.results }
+        return request(.fetchPokemon(limit: PAGING_SIZE, offset: page * PAGING_SIZE), type: PokemonEntity.self).map{ $0.results }
     }
     
 }
@@ -52,6 +55,7 @@ extension PokemonService {
             })
                 .subscribe(
                 onSuccess: { result in
+                    self.page += 1
                     return single(.success(result))
                 },
                 onFailure: { error in
