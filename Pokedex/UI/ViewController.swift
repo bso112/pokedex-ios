@@ -70,10 +70,12 @@ extension ViewController : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! PokemonCell
+        let pokemon = self.pokemonList[indexPath.item]
         cell.layer.cornerRadius = 20.0
         cell.layer.masksToBounds = true
         cell.backgroundColor = .red
-        cell.pokemonImg.loadFrom(URLAddress: self.pokemonList[indexPath.item].getImageUrl())
+        cell.pokemonImg.loadFrom(URLAddress: pokemon.getImageUrl())
+        cell.pokemonName.text = pokemon.name
         return cell
     }
     
@@ -86,12 +88,3 @@ extension ViewController : UICollectionViewDelegate {
     }
 }
 
-extension ViewController {
-    func getScreenWidth() -> CGFloat {
-        return UIScreen.main.bounds.size.width
-    }
-    
-    func getScreenHeight() -> CGFloat {
-        return UIScreen.main.bounds.size.height
-    }
-}

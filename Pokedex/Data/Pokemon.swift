@@ -16,7 +16,7 @@ struct Pokemon : Codable {
     let url : String
     
     func getImageUrl() -> String {
-        let index = url[url.index(url.endIndex, offsetBy: -2)]
+        let index = String(url.split(separator: "/").last ?? "")
         return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(index).png"
     }
 }

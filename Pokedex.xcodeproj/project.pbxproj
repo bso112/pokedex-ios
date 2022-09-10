@@ -26,6 +26,7 @@
 		087364B928CC65440026555D /* ColumnFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087364B828CC65440026555D /* ColumnFlowLayout.swift */; };
 		087364BB28CC6CA50026555D /* PokemonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087364BA28CC6CA50026555D /* PokemonCell.swift */; };
 		087364BF28CC72540026555D /* ViewExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087364BE28CC72540026555D /* ViewExtention.swift */; };
+		087364C128CC89420026555D /* ViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087364C028CC89420026555D /* ViewControllerRepresentable.swift */; };
 		524B45EFE4B72E2C71AFCFD3 /* Pods_Pokedex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29DC40B60FD1107891A4708A /* Pods_Pokedex.framework */; };
 		6B381B1ED14DA6BF2C2027D4 /* Pods_Pokedex_PokedexUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE626263BA9BE82C7968DCAB /* Pods_Pokedex_PokedexUITests.framework */; };
 		9C8DB8F237F3D016EEAD33BE /* Pods_PokedexTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E7C58A529B0FF18D766F0B /* Pods_PokedexTests.framework */; };
@@ -72,6 +73,7 @@
 		087364B828CC65440026555D /* ColumnFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnFlowLayout.swift; sourceTree = "<group>"; };
 		087364BA28CC6CA50026555D /* PokemonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCell.swift; sourceTree = "<group>"; };
 		087364BE28CC72540026555D /* ViewExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtention.swift; sourceTree = "<group>"; };
+		087364C028CC89420026555D /* ViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		25E7C58A529B0FF18D766F0B /* Pods_PokedexTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PokedexTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29DC40B60FD1107891A4708A /* Pods_Pokedex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pokedex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		669A2B36E6B0DF6BE2F98556 /* Pods-PokedexTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokedexTests.release.xcconfig"; path = "Target Support Files/Pods-PokedexTests/Pods-PokedexTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 			children = (
 				087364B828CC65440026555D /* ColumnFlowLayout.swift */,
 				087364BA28CC6CA50026555D /* PokemonCell.swift */,
+				087364C028CC89420026555D /* ViewControllerRepresentable.swift */,
 			);
 			path = CutomView;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				087364BF28CC72540026555D /* ViewExtention.swift in Sources */,
 				087364B528C8CCA50026555D /* Log.swift in Sources */,
 				08327FED28C495F600370D55 /* ViewController.swift in Sources */,
+				087364C128CC89420026555D /* ViewControllerRepresentable.swift in Sources */,
 				0832802028C653FF00370D55 /* PokemonService.swift in Sources */,
 				087364BB28CC6CA50026555D /* PokemonCell.swift in Sources */,
 				0832801928C64EB700370D55 /* HomeReactor.swift in Sources */,
